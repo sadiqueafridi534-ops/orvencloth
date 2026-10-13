@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orven Cloth — Fashion for Everyone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --fg:#111111; --muted:#6f6f6f; --line:#ececec; --tile:#f5f5f5; --sale:#d4113a; --ok:#12805c; --btn:#111111; --btn-fg:#ffffff;
+  --logo:"Bodoni Moda","Didot",Georgia,serif;
+  --head:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --ui:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  --stick:110px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#121212;--fg:#f2f2f2;--muted:#a3a3a3;--line:#2b2b2b;--tile:#1d1d1d;--sale:#ff5a76;--btn:#f2f2f2;--btn-fg:#121212}
+}
+:root[data-theme="dark"]{--bg:#121212;--fg:#f2f2f2;--muted:#a3a3a3;--line:#2b2b2b;--tile:#1d1d1d;--sale:#ff5a76;--btn:#f2f2f2;--btn-fg:#121212}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--stick) + env(safe-area-inset-top,0px) + 8px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 14px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+svg{display:block}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1400px;margin:0 auto;padding:0 16px}
+.muted{color:var(--muted)}
+
+/* Announcement */
+.ann{background:var(--btn);color:var(--btn-fg);display:flex;justify-content:center;gap:28px;padding:8px 16px;font-size:12px;font-weight:500;flex-wrap:wrap}
+.ann a{text-decoration:underline;text-underline-offset:2px}
+@media(max-width:640px){.ann{gap:16px;font-size:11px}.ann>*:nth-child(n+3){display:none}}
+
+/* Header */
+.stick{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.hd{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"logo search icons";align-items:center;gap:24px;padding:10px 16px;max-width:1400px;margin:0 auto}
+.logo{grid-area:logo;display:flex;flex-direction:column;align-items:center;line-height:1;background:var(--btn);color:var(--btn-fg);padding:9px 16px 10px;border-radius:8px}
+.logo svg{width:30px;height:30px;margin-bottom:6px}
+.logo b{font-family:var(--logo);font-weight:700;font-size:17px;letter-spacing:.22em;margin-right:-.22em}
+.logo small{font-size:6.5px;font-weight:700;letter-spacing:.8em;margin-right:-.8em;margin-top:5px}
+.search{grid-area:search;position:relative;max-width:640px;width:100%;justify-self:center}
+.search input{width:100%;height:42px;border:1.5px solid var(--fg);border-radius:999px;padding:0 48px 0 18px;background:var(--bg);color:var(--fg);font:inherit;outline-offset:2px}
+.search .go{position:absolute;right:4px;top:4px;width:34px;height:34px;border-radius:50%;background:var(--btn);color:var(--btn-fg);display:grid;place-items:center}
+.sugg{position:absolute;left:0;right:0;top:48px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);overflow:hidden;display:none;z-index:40}
+.sugg.on{display:block}
+.sugg button{display:flex;justify-content:space-between;gap:12px;width:100%;padding:11px 16px}
+.sugg button:hover,.sugg button:focus-visible{background:var(--tile)}
+.sugg .none{padding:14px 16px;color:var(--muted)}
+.icons{grid-area:icons;display:flex;gap:4px}
+.ib{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:50px;padding:4px 6px;font-size:11px;font-weight:500;text-align:center}
+.ib svg{width:24px;height:24px}
+.ib em{position:absolute;top:-2px;right:6px;min-width:17px;height:17px;border-radius:9px;background:var(--sale);color:#fff;font-size:10px;font-style:normal;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.ib em[data-n="0"]{display:none}
+@media(max-width:760px){
+  .hd{grid-template-columns:1fr auto;grid-template-areas:"logo icons" "search search";gap:8px 12px}
+  .logo{align-items:center;justify-self:start;padding:7px 12px 8px}
+  .logo svg{width:22px;height:22px;margin-bottom:4px}
+  .logo b{font-size:13px}
+  .search{max-width:none}
+  .ib{min-width:44px}
+  .ib span{display:none}
+  .ib.hide-m{display:none}
+}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:1400px;margin:0 auto;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{white-space:nowrap;padding:8px 16px;border-radius:999px;font-weight:500;background:var(--tile)}
+.cats button[aria-pressed="true"]{background:var(--btn);color:var(--btn-fg)}
+.cats button.sale{color:var(--sale);font-weight:700}
+.cats button.sale[aria-pressed="true"]{color:#fff;background:var(--sale)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;margin-top:12px;border-radius:14px}
+.track{display:flex;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.slide{position:relative;flex:0 0 100%;min-height:380px;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.slide h1,.slide h2{font-family:var(--head);font-weight:800;font-size:clamp(34px,6vw,76px);line-height:.95;margin:0 0 12px;letter-spacing:-.02em;max-width:11em}
+.slide p{font-size:clamp(14px,1.6vw,18px);margin:0 0 22px;max-width:26em;font-weight:500}
+.slide .cta{align-self:flex-start;background:var(--sbtn);color:var(--sbtnfg);padding:13px 28px;border-radius:999px;font-weight:700;text-align:center}
+.slide svg{position:absolute;right:4%;bottom:0;height:112%;width:auto;pointer-events:none}
+.arrow{position:absolute;top:50%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;transform:translateY(-50%);display:grid;place-items:center;font-size:20px;z-index:3;text-align:center}
+.arrow.l{left:12px}.arrow.r{right:12px}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px;z-index:3}
+.dots button{width:10px;height:10px;border-radius:50%;background:rgba(127,127,127,.55)}
+.dots button[aria-current="true"]{background:#111;width:24px;border-radius:5px}
+@media(max-width:700px){
+  .slide{min-height:300px;padding:28px 22px 44px}
+  .slide svg{right:-6%;height:92%}
+  .slide h1,.slide h2{max-width:6em}
+  .arrow{display:none}
+}
+
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.trust div{background:var(--tile);border-radius:10px;padding:12px 14px;font-weight:500;font-size:13px;text-align:center}
+@media(max-width:700px){.trust{grid-template-columns:repeat(2,1fr)}}
+.coupons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.coupon{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1.5px dashed var(--sale);border-radius:10px;padding:12px 14px}
+.coupon b{display:block;font-family:var(--head);font-size:18px;color:var(--sale);line-height:1.1}
+.coupon span{font-size:12px;color:var(--muted)}
+.coupon button{border:1.5px solid var(--sale);color:var(--sale);border-radius:999px;padding:6px 14px;font-weight:700;white-space:nowrap;text-align:center}
+@media(max-width:800px){.coupons{grid-template-columns:1fr}}
+
+.sec{margin-top:36px}
+.sh{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.sh h2{font-family:var(--head);font-weight:800;font-size:24px;margin:0;letter-spacing:-.01em}
+.rounds{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.round{text-align:center;font-weight:500}
+.round .c{aspect-ratio:1;border-radius:50%;overflow:hidden;margin-bottom:8px;transition:transform .2s}
+.round:hover .c{transform:scale(1.04)}
+.round .c svg{width:100%;height:100%}
+@media(max-width:700px){.rounds{display:flex;overflow-x:auto;gap:14px;padding-bottom:6px;scrollbar-width:none}.round{flex:0 0 76px}}
+.deals{background:var(--tile);border-radius:14px;padding:18px 16px}
+.hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.hscroll .card{flex:0 0 172px;scroll-snap-align:start}
+@media(min-width:900px){.hscroll .card{flex-basis:200px}}
+
+.tool{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.tool select{height:40px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;padding:0 10px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px 10px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:16px 8px}}
+.card{position:relative;min-width:0}
+.img{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:8px;background:var(--tile);cursor:pointer}
+.img svg{position:absolute;inset:0;width:100%;height:100%}
+.badge{position:absolute;left:0;top:10px;background:var(--sale);color:#fff;font-weight:700;font-size:12px;padding:3px 8px;border-radius:0 4px 4px 0}
+.nw{position:absolute;left:8px;bottom:8px;background:#111;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px}
+.heart{position:absolute;right:6px;top:6px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;display:grid;place-items:center;font-size:19px;text-align:center}
+.heart[aria-pressed="true"]{color:#d4113a}
+.add{position:absolute;right:8px;bottom:8px;width:40px;height:40px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.add svg{width:20px;height:20px}
+.info{padding:8px 2px 0}
+.nm{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em;text-align:left}
+.nm:hover{text-decoration:underline}
+.pr{display:flex;align-items:baseline;gap:8px;margin-top:2px;flex-wrap:wrap}
+.pr b{color:var(--sale);font-size:17px;font-family:var(--head);font-weight:800}
+.pr s{color:var(--muted);font-size:12px}
+.sub2{color:var(--muted);font-size:12px;margin-top:1px}
+.empty{grid-column:1/-1;text-align:center;padding:64px 16px;color:var(--muted)}
+.empty button{margin-top:12px;background:var(--btn);color:var(--btn-fg);padding:10px 22px;border-radius:999px;font-weight:700;text-align:center}
+
+footer{margin-top:64px;background:var(--tile);padding:40px 0 calc(24px + env(safe-area-inset-bottom,0px))}
+.fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+@media(max-width:800px){.fcols{grid-template-columns:1fr 1fr}}
+footer h3{font-size:13px;margin:0 0 12px;font-weight:700}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;color:var(--muted)}
+footer a:hover,footer li button:hover{color:var(--fg)}
+.fbrand b{font-family:var(--logo);font-size:24px;letter-spacing:.2em}
+.fbrand p{color:var(--muted);max-width:30ch}
+.legal{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+.legal button{text-decoration:underline;text-underline-offset:3px}
+
+/* Overlays */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;right:0;width:min(440px,100%);background:var(--bg);z-index:60;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--line);font-family:var(--head);font-weight:800;font-size:20px}
+.dh button{font:500 14px var(--ui);text-decoration:underline}
+.ship{padding:12px 16px;background:var(--tile);font-size:13px}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--ok)}
+.db{flex:1;overflow:auto;padding:4px 16px}
+.ln{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ln .th{aspect-ratio:3/4;border-radius:6px;overflow:hidden;position:relative}
+.ln .th svg{position:absolute;inset:0;width:100%;height:100%}
+.ln .t{display:flex;justify-content:space-between;gap:8px}
+.ln .s{color:var(--muted);font-size:12px;margin:2px 0 8px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px}
+.qty button{width:38px;height:38px;font-size:18px;text-align:center}
+.qty span{min-width:26px;text-align:center}
+.rm{margin-left:12px;color:var(--muted);text-decoration:underline}
+.df{padding:14px 16px;border-top:1px solid var(--line)}
+.cp{display:flex;gap:6px;margin-bottom:12px}
+.cp input{flex:1;min-width:0;height:42px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:var(--bg);color:var(--fg);font:inherit;text-transform:uppercase}
+.cp button{border:1px solid var(--fg);border-radius:8px;padding:0 16px;font-weight:700;text-align:center}
+.row{display:flex;justify-content:space-between;margin:4px 0}
+.row.tot{font-family:var(--head);font-weight:800;font-size:20px;margin:10px 0 12px}
+.row.dis{color:var(--ok)}
+.btn{display:block;width:100%;background:var(--btn);color:var(--btn-fg);padding:14px;border-radius:999px;text-align:center;font-weight:700;margin-top:8px}
+.btn.alt{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}
+.btn.wa{background:#1b8f4c;color:#fff}
+.btn:hover{opacity:.9}
+
+/* Modal */
+.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-47%);opacity:0;pointer-events:none;width:min(980px,94vw);max-height:90svh;overflow:auto;background:var(--bg);border-radius:16px;z-index:70;padding:28px;transition:opacity .22s,transform .22s}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.modal.narrow{width:min(600px,94vw)}
+.mx{position:absolute;right:10px;top:10px;width:44px;height:44px;font-size:26px;line-height:1;text-align:center;border-radius:50%;z-index:2;background:var(--bg)}
+.modal h2{font-family:var(--head);font-weight:800;font-size:26px;margin:0 36px 12px 0;letter-spacing:-.01em}
+.modal h3{font-size:14px;margin:18px 0 8px}
+.modal p{margin:0 0 10px}
+.modal ul.facts{margin:12px 0 0;padding-left:18px;color:var(--muted)}
+.modal table{border-collapse:collapse;width:100%;margin:8px 0 14px;font-size:13px}
+.modal th,.modal td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+.modal th{background:var(--tile)}
+.pd{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.pd .pimg{position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--tile)}
+.pd .pimg svg{position:absolute;inset:0;width:100%;height:100%}
+.pd .pr b{font-size:26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chips button{min-width:54px;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:8px;font-weight:500;text-align:center}
+.chips button[aria-pressed="true"]{border-color:var(--fg);background:var(--btn);color:var(--btn-fg)}
+.lnk{text-decoration:underline;text-underline-offset:3px;color:var(--muted);font-weight:400}
+.co{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-weight:500;margin-bottom:4px}
+.fld input,.fld select,.fld textarea{width:100%;height:46px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:var(--bg);color:var(--fg);font:inherit}
+.fld textarea{height:64px;padding:10px 12px;resize:vertical}
+.fld input[aria-invalid="true"],.fld select[aria-invalid="true"],.fld textarea[aria-invalid="true"]{border-color:var(--sale)}
+.err{color:var(--sale);font-size:12px;min-height:0;margin-top:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pay{display:grid;gap:8px;margin:6px 0 4px}
+.pay label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
+.pay input{margin-top:3px;width:18px;height:18px;accent-color:#111}
+.sumbox{background:var(--tile);border-radius:12px;padding:16px;align-self:start}
+.sumbox .it{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.ord{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.ord .oh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700}
+.ord .st{display:inline-block;background:var(--tile);border-radius:999px;padding:2px 10px;font-size:12px;font-weight:500;margin-left:6px}
+.ord ul{margin:8px 0;padding-left:18px;color:var(--muted)}
+.ord .acts{display:flex;gap:8px;flex-wrap:wrap}
+.ord .acts a,.ord .acts button{border:1px solid var(--fg);border-radius:999px;padding:8px 16px;font-weight:500}
+.done{text-align:center;padding:8px 0}
+.done .ck{width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 12px;font-size:28px}
+@media(max-width:760px){
+  .modal{top:auto;bottom:0;left:0;width:100%;max-height:92svh;border-radius:18px 18px 0 0;padding:22px 16px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(6%)}
+  .modal.on,.modal.narrow.on{transform:none;width:100%}
+  .modal.narrow{width:100%}
+  .pd,.co{grid-template-columns:1fr}
+  .pd .pimg{max-height:46svh;aspect-ratio:auto;height:46svh}
+}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--btn);color:var(--btn-fg);padding:12px 20px;border-radius:999px;font-weight:500;opacity:0;pointer-events:none;transition:.25s;z-index:90;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.wa-float{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:35;background:#1b8f4c;color:#fff;border-radius:999px;padding:12px 18px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.bn{display:none}
+@media(max-width:760px){
+  body{padding-bottom:64px}
+  .bn{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:36;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .bn a,.bn button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:56px;font-size:11px;font-weight:500;position:relative;text-align:center}
+  .bn svg{width:22px;height:22px}
+  .bn em{position:absolute;top:6px;left:56%;min-width:16px;height:16px;border-radius:8px;background:var(--sale);color:#fff;font-size:10px;font-style:normal;font-weight:700;display:grid;place-items:center;padding:0 4px}
+  .bn em[data-n="0"]{display:none}
+  .wa-float{bottom:calc(76px + env(safe-area-inset-bottom,0px));padding:10px 14px}
+  .toast{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="ann"><span>Free delivery above ₹999</span><span>Cash on delivery available</span><span>Use code ORVEN10 for 10% off</span><a href="tel:+916204023050">Call +91 62040 23050</a></div>
+
+<div class="stick" id="stick">
+  <div class="hd">
+    <a href="#" class="logo" aria-label="Orven Cloth home"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="54" cy="68" r="38" stroke-width="9"/><circle cx="54" cy="68" r="21" stroke-width="3.5" stroke-dasharray="7 7"/><path d="M114 6 L76 56" stroke-width="4.5"/><ellipse cx="109" cy="11" rx="1.6" ry="4.5" transform="rotate(36 109 11)" stroke-width="2"/></svg><b>ORVEN</b><small>CLOTH</small></a>
+    <div class="search">
+      <label for="q" class="sr">Search products</label>
+      <input id="q" type="search" placeholder="Search dresses, kurtas, hoodies" autocomplete="off">
+      <button class="go" id="goSearch" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+      <div class="sugg" id="sugg"></div>
+    </div>
+    <div class="icons">
+      <a class="ib hide-m" href="tel:+916204023050" aria-label="Call us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg><span>Call</span></a>
+      <button class="ib" id="openOrders" aria-label="My orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></svg><span>Orders</span></button>
+      <button class="ib" id="openSaved" aria-label="Saved items"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg><span>Saved</span><em id="savedN" data-n="0"></em></button>
+      <button class="ib" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span>Bag</span><em id="bagN" data-n="0"></em></button>
+    </div>
+  </div>
+  <nav class="cats" id="cats" aria-label="Categories">
+    <button data-cat="all" aria-pressed="true">All</button>
+    <button data-cat="women" aria-pressed="false">Women</button>
+    <button data-cat="men" aria-pressed="false">Men</button>
+    <button data-cat="kids" aria-pressed="false">Kids</button>
+    <button data-cat="ethnic" aria-pressed="false">Ethnic wear</button>
+    <button data-cat="winter" aria-pressed="false">Winter</button>
+    <button data-cat="sale" class="sale" aria-pressed="false">Sale</button>
+  </nav>
+</div>
+
+<main class="wrap">
+  <section class="hero" aria-roledescription="carousel" aria-label="Offers">
+    <div class="track" id="track">
+      <div class="slide" style="background:#111;color:#fff;--sbtn:#e5173f;--sbtnfg:#fff" data-art="dress|#e5173f">
+        <h1>Sale. Up to 50% off</h1><p>Dresses, coats and more at reduced prices.</p><button class="cta" data-go="sale">Shop sale</button>
+      </div>
+      <div class="slide" style="background:#f6d3df;color:#3b0f24;--sbtn:#3b0f24;--sbtnfg:#fff" data-art="kurta|#8a1f52">
+        <h2>Festive ethnic wear</h2><p>Kurtas and sets for every occasion, from ₹699.</p><button class="cta" data-go="ethnic">Shop ethnic</button>
+      </div>
+      <div class="slide" style="background:#cfe1ee;color:#0f2238;--sbtn:#0f2238;--sbtnfg:#fff" data-art="coat|#24324a">
+        <h2>Winter is here</h2><p>Coats, hoodies and sweaters from ₹449.</p><button class="cta" data-go="winter">Shop winter</button>
+      </div>
+    </div>
+    <button class="arrow l" id="prev" aria-label="Previous offer">‹</button>
+    <button class="arrow r" id="next" aria-label="Next offer">›</button>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <div class="trust"><div>Free delivery above ₹999</div><div>Cash on delivery</div><div>7-day easy returns</div><div>Order confirmed on WhatsApp</div></div>
+
+  <div class="coupons">
+    <div class="coupon"><div><b>10% off</b><span>On any order. Code ORVEN10</span></div><button data-copy="ORVEN10">Apply</button></div>
+    <div class="coupon"><div><b>Free delivery</b><span>On orders above ₹999</span></div><button data-info="shipping">Details</button></div>
+    <div class="coupon"><div><b>Pay on delivery</b><span>Cash on delivery available</span></div><button data-go="all">Shop</button></div>
+  </div>
+
+  <section class="sec" aria-labelledby="shopcat"><div class="sh"><h2 id="shopcat">Shop by category</h2></div><div class="rounds" id="rounds"></div></section>
+
+  <section class="sec deals" aria-labelledby="dealsh"><div class="sh"><h2 id="dealsh">Top deals</h2></div><div class="hscroll" id="deals"></div></section>
+
+  <section class="sec" id="shop" aria-labelledby="gridTitle">
+    <div class="tool">
+      <div><h2 id="gridTitle" style="font-family:var(--head);font-weight:800;font-size:24px;margin:0">All products</h2><span id="count" class="muted"></span> <button class="lnk" id="clear" style="display:none;margin-left:6px">Clear search</button></div>
+      <div><label for="sort" class="sr">Sort products</label>
+      <select id="sort"><option value="rec">Recommended</option><option value="new">Newest</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="disc">Biggest discount</option></select></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div class="fbrand"><b>ORVEN CLOTH</b><p>Fashion for women, men and kids at honest prices.</p>
+        <a class="btn wa" style="max-width:260px" href="https://wa.me/916204023050?text=Hi%20Orven%20Cloth%2C%20please%20send%20me%20offers%20and%20new%20arrivals" target="_blank" rel="noopener">Get offers on WhatsApp</a></div>
+      <div><h3>Help</h3><ul><li><a href="tel:+916204023050">Call +91 62040 23050</a></li><li><a href="https://wa.me/916204023050" target="_blank" rel="noopener">WhatsApp us</a></li><li><button data-info="shipping">Shipping and delivery</button></li><li><button data-info="returns">Returns and exchanges</button></li><li><button data-info="size">Size guide</button></li></ul></div>
+      <div><h3>Shop</h3><ul><li><button data-go="women">Women</button></li><li><button data-go="men">Men</button></li><li><button data-go="kids">Kids</button></li><li><button data-go="sale">Sale</button></li></ul></div>
+      <div><h3>Company</h3><ul><li><button data-info="about">About Orven Cloth</button></li><li><button data-info="privacy">Privacy policy</button></li><li><button data-info="terms">Terms of purchase</button></li><li><button data-info="contact">Contact</button></li></ul></div>
+    </div>
+    <div class="legal"><span>© Orven Cloth. All prices in INR.</span><button id="theme">Switch light or dark theme</button></div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/916204023050?text=Hi%20Orven%20Cloth%2C%20I%20need%20help" target="_blank" rel="noopener">WhatsApp</a>
+
+<nav class="bn" aria-label="Quick navigation">
+  <button id="bnHome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</button>
+  <button id="bnShop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Shop</button>
+  <button id="bnSaved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg>Saved</button>
+  <button id="bnBag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>Bag<em id="bagN2" data-n="0"></em></button>
+  <a href="tel:+916204023050"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Call</a>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="cart" aria-label="Shopping bag" aria-hidden="true">
+  <div class="dh"><span>Your bag</span><button id="closeCart">Close</button></div>
+  <div class="ship" id="ship"></div>
+  <div class="db" id="cartBody"></div>
+  <div class="df">
+    <div class="cp"><label for="code" class="sr">Coupon code</label><input id="code" placeholder="Coupon code"><button id="applyCode">Apply</button></div>
+    <div class="row"><span>Subtotal</span><span id="sub">₹0</span></div>
+    <div class="row dis" id="discRow" style="display:none"><span>Coupon ORVEN10</span><span id="disc">-₹0</span></div>
+    <div class="row"><span>Delivery</span><span id="del">₹0</span></div>
+    <div class="row tot"><span>Total</span><span id="tot">₹0</span></div>
+    <button class="btn" id="checkout">Checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Details"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== SETTINGS: edit these ===== */
+const WHATSAPP = "916204023050";   // your WhatsApp number with country code
+const FREE_SHIP = 999, SHIP_FEE = 79;
+const COUPON = "ORVEN10", COUPON_PCT = 10;
+const UPI_ID = "";                  // optional: your UPI ID like name@bank. If set, "Pay now with UPI" appears at checkout.
+
+/* ===== PRODUCTS: edit here =====
+ [name, category(women|men|kids), garment, price, MRP (original price), garment color, tile color, flags]
+ flags: e = ethnic, w = winter, n = new. Set MRP equal to price for no discount badge. */
+const RAW = [
+ ["Floral wrap midi dress","women","dress",899,1499,"#c2415c","#f6e3e6","n"],
+ ["Ribbed knit crop sweater","women","knit",649,999,"#9b7b5f","#efe6dc","w"],
+ ["High-waist wide leg trousers","women","trousers",799,1299,"#3d4654","#e3e5e8",""],
+ ["Satin pleated midi skirt","women","skirt",599,1199,"#2f6b5b","#dcebe5","n"],
+ ["Oversized poplin shirt","women","shirt",549,899,"#f4f4f1","#d9dee6",""],
+ ["Longline wool blend coat","women","coat",2499,4999,"#2b2a28","#d9d3c9","w"],
+ ["Zip-up fleece hoodie","women","hoodie",899,1499,"#7a6fa8","#e6e3f0","w"],
+ ["Printed cotton kurta","women","kurta",999,1799,"#b8541f","#f5e4d3","e,n"],
+ ["Embroidered anarkali kurta","women","dress",1299,2599,"#8a1f52","#f6d3df","e"],
+ ["Palazzo trouser set","women","trousers",699,1199,"#1f5e6e","#d6e8ec","e"],
+ ["Heavyweight cotton t-shirt","men","tee",399,699,"#1d1d1d","#e4e2dc",""],
+ ["Cotton utility overshirt","men","shirt",799,1299,"#5b6149","#d3d5c6","n"],
+ ["Relaxed cargo trousers","men","trousers",899,1599,"#6a6250","#e1ddd0",""],
+ ["Padded bomber jacket","men","jacket",1499,2999,"#cfc7b5","#6d7468","w,n"],
+ ["Merino crewneck sweater","men","knit",899,1499,"#2c3a55","#d6d9de","w"],
+ ["Printed festive kurta","men","kurta",799,1399,"#1f4d3a","#dbe8e0","e"],
+ ["Stretch chino shorts","men","shorts",499,799,"#a79a7a","#ece6d6",""],
+ ["Pullover hoodie","men","hoodie",999,1799,"#3b3b3b","#dcdcdc","w"],
+ ["Striped knit sweater","kids","knit",449,799,"#3f6a8a","#e9dfc9","w"],
+ ["Graphic cotton t-shirt","kids","tee",249,399,"#e0a100","#e8efe3",""],
+ ["Puffer jacket","kids","jacket",1099,2199,"#c4573f","#e8d3cc","w"],
+ ["Pinafore dress","kids","dress",549,899,"#4d5a73","#dde0e6","n"],
+ ["Denim shorts","kids","shorts",349,599,"#4a6fa5","#dfe7f1",""],
+ ["Festive lehenga set","kids","dress",1199,2399,"#b3224f","#f7dbe3","e"]
+];
+const PRODUCTS = RAW.map((r,i)=>{const f=r[7].split(",");return {id:i+1,name:r[0],cat:r[1],type:r[2],price:r[3],orig:r[4],fg:r[5],bg:r[6],eth:f.includes("e"),win:f.includes("w"),isNew:f.includes("n"),disc:Math.round((1-r[3]/r[4])*100)}});
+const SIZES_ADULT=["XS","S","M","L","XL","XXL"], SIZES_KIDS=["2-3Y","4-5Y","6-7Y","8-9Y","10-11Y"];
+const sizesFor=p=>p.cat==="kids"?SIZES_KIDS:SIZES_ADULT;
+const CATLABEL={women:"women",men:"men",kids:"kids"};
+const TYPELABEL={tee:"T-shirt",shirt:"Shirt",knit:"Sweater",trousers:"Trousers",dress:"Dress",skirt:"Skirt",jacket:"Jacket",coat:"Coat",kurta:"Kurta",hoodie:"Hoodie",shorts:"Shorts"};
+const STATES=["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
+
+/* ===== Garment art (vector stand-ins for photos) ===== */
+const SHAPES={
+ tee:`<path d="M100 62 L58 84 L30 138 L66 156 L82 132 L82 342 L218 342 L218 132 L234 156 L270 138 L242 84 L200 62 Q150 98 100 62Z"/>`,
+ shirt:`<path d="M104 58 L58 80 L40 290 L76 296 L90 160 L90 346 L210 346 L210 160 L224 296 L260 290 L242 80 L196 58 L150 96Z"/><path d="M150 96 V346 M104 58 L130 84 L150 96 L170 84 L196 58" fill="none"/>`,
+ knit:`<path d="M108 58 L60 80 L38 292 L76 298 L90 160 L90 342 L210 342 L210 160 L224 298 L262 292 L240 80 L192 58 Q150 82 108 58Z"/><path d="M90 326 H210 M90 312 H210" fill="none"/>`,
+ trousers:`<path d="M96 48 H204 L226 356 H166 L150 150 L134 356 H74Z"/><path d="M96 70 H204 M150 70 V150" fill="none"/>`,
+ dress:`<path d="M116 38 L184 38 L194 120 L236 356 L64 356 L106 120Z"/><path d="M106 120 H194 M116 38 L132 18 M184 38 L168 18" fill="none"/>`,
+ skirt:`<path d="M100 86 H200 L252 340 H48Z"/><path d="M100 86 H200 M120 100 L100 340 M150 100 V340 M180 100 L200 340" fill="none"/>`,
+ jacket:`<path d="M104 52 L56 76 L40 290 L78 296 L90 150 L90 336 L210 336 L210 150 L222 296 L260 290 L244 76 L196 52 L150 96Z"/><path d="M150 96 V336 M104 52 L128 70 L150 96 L172 70 L196 52 M90 300 H210" fill="none"/>`,
+ coat:`<path d="M106 48 L54 74 L38 306 L74 312 L88 150 L84 372 L216 372 L212 150 L226 312 L262 306 L246 74 L194 48 L150 124Z"/><path d="M150 124 V372 M106 48 L130 80 L150 124 L170 80 L194 48" fill="none"/>`,
+ kurta:`<path d="M110 50 L64 70 L46 222 L80 228 L92 140 L88 350 L150 338 L212 350 L208 140 L220 228 L254 222 L236 70 L190 50 Q150 82 110 50Z"/><path d="M150 82 V338 M138 90 H162" fill="none"/>`,
+ hoodie:`<path d="M106 56 Q150 14 194 56 L244 78 L262 292 L222 298 L210 160 L210 340 L90 340 L90 160 L78 298 L38 292 L56 78Z"/><path d="M106 56 Q150 118 194 56 M112 272 H188 L196 312 H104Z M150 100 V150" fill="none"/>`,
+ shorts:`<path d="M94 100 H206 L220 260 L160 260 L150 170 L140 260 L80 260Z"/><path d="M94 120 H206" fill="none"/>`
+};
+function art(type,fg,bg){
+  const rect=bg&&bg!=="none"?`<rect width="300" height="400" fill="${bg}"/><ellipse cx="150" cy="388" rx="92" ry="6" fill="rgba(0,0,0,.08)"/>`:"";
+  return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${rect}<g fill="${fg}" stroke="rgba(0,0,0,.28)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">${SHAPES[type]}</g></svg>`;
+}
+document.querySelectorAll(".slide[data-art]").forEach(s=>{const [t,c]=s.dataset.art.split("|");s.insertAdjacentHTML("beforeend",art(t,c,"none"))});
+
+/* ===== Helpers & state ===== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+const escH=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const load=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let cat="all",sort="rec",query="";
+let cart=load("orven2-cart",[]), saved=load("orven2-saved",[]), orders=load("orven3-orders",[]), couponOn=load("orven3-coupon",false), cust=load("orven3-cust",{});
+cart=cart.filter(i=>PRODUCTS.some(p=>p.id===i.id));
+const prod=id=>PRODUCTS.find(p=>p.id===id);
+const wa=(msg)=>`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+/* ===== Product cards & grid ===== */
+function card(p){
+  const on=saved.includes(p.id);
+  return `<article class="card" data-id="${p.id}">
+    <div class="img" data-open="${p.id}">${art(p.type,p.fg,p.bg)}
+      ${p.disc>0?`<span class="badge">-${p.disc}%</span>`:""}${p.isNew?`<span class="nw">NEW</span>`:""}
+      <button class="heart" data-heart="${p.id}" aria-pressed="${on}" aria-label="${on?"Remove":"Save"} ${escH(p.name)}">${on?"♥":"♡"}</button>
+      <button class="add" data-add="${p.id}" aria-label="Add ${escH(p.name)} to bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></button>
+    </div>
+    <div class="info"><button class="nm" data-open="${p.id}">${escH(p.name)}</button>
+      <div class="pr"><b>${fmt(p.price)}</b>${p.disc>0?`<s>${fmt(p.orig)}</s>`:""}</div>
+      <div class="sub2">${TYPELABEL[p.type]}, ${CATLABEL[p.cat]}</div></div></article>`;
+}
+function matches(p){
+  const c=cat==="all"||(cat==="sale"?p.disc>=50:cat==="ethnic"?p.eth:cat==="winter"?p.win:cat==="saved"?saved.includes(p.id):p.cat===cat);
+  const q=!query||(p.name+" "+p.cat+" "+TYPELABEL[p.type]+(p.eth?" ethnic":"")+(p.win?" winter":"")).toLowerCase().includes(query.toLowerCase());
+  return c&&q;
+}
+const TITLES={all:"All products",women:"Women",men:"Men",kids:"Kids",ethnic:"Ethnic wear",winter:"Winter",sale:"Sale",saved:"Saved items"};
+function renderGrid(){
+  let list=PRODUCTS.filter(matches);
+  const s={low:(a,b)=>a.price-b.price,high:(a,b)=>b.price-a.price,disc:(a,b)=>b.disc-a.disc,new:(a,b)=>(b.isNew-a.isNew)}[sort];
+  if(s) list=[...list].sort(s);
+  $("#grid").innerHTML=list.length?list.map(card).join(""):`<div class="empty">${cat==="saved"&&!query?"You have not saved anything yet. Tap the heart on a product to save it.":"No products match your search."}<br><button data-go="all">Show all products</button></div>`;
+  $("#gridTitle").textContent=query?`Results for "${query}"`:TITLES[cat];
+  $("#count").textContent=list.length+" items";
+  $("#clear").style.display=query?"inline":"none";
+  $$("#cats [data-cat]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.cat===cat));
+}
+function renderDeals(){$("#deals").innerHTML=[...PRODUCTS].sort((a,b)=>b.disc-a.disc).slice(0,8).map(card).join("")}
+function renderRounds(){
+  const items=[["women","Women","dress","#c2415c","#f6e3e6"],["men","Men","shirt","#3d4654","#e3e5e8"],["kids","Kids","tee","#e0a100","#f3ead0"],["ethnic","Ethnic","kurta","#b8541f","#f5e4d3"],["winter","Winter","coat","#2b2a28","#d9d3c9"],["sale","Sale","hoodie","#d4113a","#fbdfe4"]];
+  $("#rounds").innerHTML=items.map(i=>`<button class="round" data-go="${i[0]}"><div class="c">${art(i[2],i[3],i[4])}</div>${i[1]}</button>`).join("");
+}
+function go(c,scroll=true){cat=c;query="";$("#q").value="";renderGrid();closeAll();if(scroll)$("#shop").scrollIntoView()}
+function refreshLists(){renderGrid();renderDeals()}
+
+/* ===== Saved ===== */
+function toggleSave(id){
+  saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];save("orven2-saved",saved);
+  $("#savedN").textContent=saved.length;$("#savedN").dataset.n=saved.length;refreshLists();
+}
+
+/* ===== Cart ===== */
+function addItem(id,size,qty=1){
+  const r=cart.find(i=>i.id===id&&i.size===size);r?r.qty+=qty:cart.push({id,size,qty});
+  save("orven2-cart",cart);renderCart();
+}
+function totals(c=cart,coupon=couponOn){
+  const sub=c.reduce((a,i)=>a+i.qty*prod(i.id).price,0);
+  const disc=coupon?Math.round(sub*COUPON_PCT/100):0,after=sub-disc;
+  const del=!c.length||after>=FREE_SHIP?0:SHIP_FEE;
+  return {sub,disc,after,del,total:after+del};
+}
+function renderCart(){
+  const n=cart.reduce((a,i)=>a+i.qty,0);
+  ["#bagN","#bagN2"].forEach(s=>{$(s).textContent=n;$(s).dataset.n=n});
+  const t=totals();
+  $("#ship").innerHTML=!cart.length?"Free delivery on orders above "+fmt(FREE_SHIP):t.after>=FREE_SHIP?`<b style="color:var(--ok)">You get free delivery</b>`:`Add <b>${fmt(FREE_SHIP-t.after)}</b> more for free delivery<div class="bar"><i style="width:${Math.min(100,t.after/FREE_SHIP*100)}%"></i></div>`;
+  $("#cartBody").innerHTML=cart.length?cart.map((i,k)=>{const p=prod(i.id);
+    return `<div class="ln"><div class="th">${art(p.type,p.fg,p.bg)}</div><div>
+      <div class="t"><span>${escH(p.name)}</span><b>${fmt(p.price*i.qty)}</b></div><div class="s">Size ${i.size}</div>
+      <div class="qty"><button data-dec="${k}" aria-label="Decrease quantity">−</button><span>${i.qty}</span><button data-inc="${k}" aria-label="Increase quantity">+</button></div>
+      <button class="rm" data-rm="${k}">Remove</button></div></div>`}).join(""):`<p class="muted" style="padding:28px 0">Your bag is empty. Tap the bag icon on any product to add it.</p>`;
+  $("#sub").textContent=fmt(t.sub);$("#del").textContent=t.del?fmt(t.del):"Free";
+  $("#discRow").style.display=couponOn&&t.disc?"flex":"none";$("#disc").textContent="-"+fmt(t.disc);
+  $("#tot").textContent=fmt(t.total);
+}
+$("#cartBody").addEventListener("click",e=>{
+  const d=e.target.closest("button")?.dataset;if(!d)return;
+  if(d.inc!==undefined)cart[d.inc].qty++;
+  else if(d.dec!==undefined){cart[d.dec].qty--;if(cart[d.dec].qty<1)cart.splice(d.dec,1)}
+  else if(d.rm!==undefined)cart.splice(d.rm,1);else return;
+  save("orven2-cart",cart);renderCart();
+});
+function setCoupon(on){couponOn=on;save("orven3-coupon",on);renderCart()}
+$("#applyCode").onclick=()=>{
+  const v=$("#code").value.trim().toUpperCase();
+  if(v===COUPON){setCoupon(true);toast(`Coupon applied: ${COUPON_PCT}% off`)}else toast(v?"That code is not valid":"Enter a coupon code");
+};
+$("#checkout").onclick=()=>{ if(!cart.length){toast("Your bag is empty");return} openCheckout() };
+
+/* ===== Overlays ===== */
+const scrim=$("#scrim"), modal=$("#modal");
+function openCart(){closeAll();$("#cart").classList.add("on");$("#cart").setAttribute("aria-hidden","false");scrim.classList.add("on")}
+function closeAll(){
+  $("#cart").classList.remove("on");$("#cart").setAttribute("aria-hidden","true");
+  modal.classList.remove("on");modal.setAttribute("aria-hidden","true");
+  scrim.classList.remove("on");$("#sugg").classList.remove("on");
+}
+function openModal(html,narrow){
+  closeAll();
+  modal.className="modal on"+(narrow?" narrow":"");
+  modal.innerHTML=`<button class="mx" data-closem aria-label="Close">×</button>`+html;
+  modal.setAttribute("aria-hidden","false");scrim.classList.add("on");modal.scrollTop=0;
+  const h=modal.querySelector("h2");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}
+}
+scrim.onclick=closeAll;$("#closeCart").onclick=closeAll;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+["#openCart","#bnBag"].forEach(s=>$(s).onclick=openCart);
+["#openSaved","#bnSaved"].forEach(s=>$(s).onclick=()=>go("saved"));
+$("#openOrders").onclick=openOrders;
+$("#bnHome").onclick=()=>{closeAll();scrollTo({top:0})};
+$("#bnShop").onclick=()=>go("all");
+
+/* ===== Product page ===== */
+let pm=null, pmSize=null;
+function openProduct(id){
+  const p=prod(id);pm=p;pmSize=null;
+  openModal(`<div class="pd"><div class="pimg">${art(p.type,p.fg,p.bg)}</div><div>
+    <h2>${escH(p.name)}</h2>
+    <div class="pr"><b>${fmt(p.price)}</b>${p.disc>0?`<s>${fmt(p.orig)}</s><span class="badge" style="position:static;border-radius:4px">-${p.disc}%</span>`:""}</div>
+    <p class="muted">${TYPELABEL[p.type]} for ${CATLABEL[p.cat]}${p.isNew?". New in":""}. Message us on WhatsApp for fabric, fit and colour details.</p>
+    <h3 style="display:flex;justify-content:space-between"><span>Select size</span><button class="lnk" data-info="size">Size guide</button></h3>
+    <div class="chips" role="group" aria-label="Sizes">${sizesFor(p).map(s=>`<button data-psize="${s}" aria-pressed="false">${s}</button>`).join("")}</div>
+    <button class="btn" data-pm-add>Add to bag</button>
+    <button class="btn alt" data-pm-buy>Buy now</button>
+    <a class="btn alt" style="border-color:var(--line)" target="_blank" rel="noopener" href="${wa(`Hi Orven Cloth, I have a question about: ${p.name} (${fmt(p.price)})`)}">Ask about this product on WhatsApp</a>
+    <ul class="facts"><li>Free delivery above ${fmt(FREE_SHIP)}</li><li>Cash on delivery available</li><li>7-day easy returns</li></ul>
+  </div></div>`);
+}
+function pmCommit(buy){
+  if(!pmSize){toast("Choose a size first");return}
+  addItem(pm.id,pmSize);
+  if(buy){openCheckout()}else{closeAll();toast("Added to bag")}
+}
+
+/* ===== Info pages ===== */
+const INFO={
+ shipping:["Shipping and delivery",`<p>We deliver across India.</p><ul class="facts"><li>Delivery is free on orders above ${fmt(FREE_SHIP)}. Below that, delivery costs ${fmt(SHIP_FEE)}.</li><li>Cash on delivery is available.</li><li>After you place an order, send it to us on WhatsApp. We confirm your order and delivery time there.</li></ul>`],
+ returns:["Returns and exchanges",`<p>You can return or exchange an item within 7 days of delivery.</p><ul class="facts"><li>Items must be unused, unwashed and have their tags.</li><li>Message us on WhatsApp with your order number to start a return or exchange.</li><li>We will tell you how the refund or replacement works when you contact us.</li></ul>`],
+ size:["Size guide",`<p class="muted">Approximate body measurements in cm. If you are between sizes, choose the larger one or ask us on WhatsApp.</p>
+  <table><tr><th>Size</th><th>Chest</th><th>Waist</th></tr><tr><td>XS</td><td>81–86</td><td>66–71</td></tr><tr><td>S</td><td>86–91</td><td>71–76</td></tr><tr><td>M</td><td>91–97</td><td>76–81</td></tr><tr><td>L</td><td>97–102</td><td>81–86</td></tr><tr><td>XL</td><td>102–107</td><td>86–91</td></tr><tr><td>XXL</td><td>107–112</td><td>91–97</td></tr></table>
+  <table><tr><th>Kids size</th><th>Height</th></tr><tr><td>2-3Y</td><td>92–98</td></tr><tr><td>4-5Y</td><td>104–110</td></tr><tr><td>6-7Y</td><td>116–122</td></tr><tr><td>8-9Y</td><td>128–134</td></tr><tr><td>10-11Y</td><td>140–146</td></tr></table>`],
+ about:["About Orven Cloth",`<p>Orven Cloth sells clothing for women, men and kids, from everyday basics to festive ethnic wear, at honest prices.</p><p>Questions? Call <a href="tel:+916204023050" style="text-decoration:underline">+91 62040 23050</a> or message us on WhatsApp.</p>`],
+ privacy:["Privacy policy",`<p>When you place an order we ask for your name, phone number and delivery address so we can deliver it.</p><ul class="facts"><li>Your order details are saved on your own device so you can see your orders and fill the form faster next time.</li><li>Your order reaches us only when you send it to us on WhatsApp.</li><li>We use your details only to process and deliver your order, and we do not sell them.</li></ul>`],
+ terms:["Terms of purchase",`<ul class="facts"><li>Prices are in Indian rupees and include applicable taxes unless stated.</li><li>An order is confirmed only after we reply to you on WhatsApp.</li><li>We may cancel an order if an item is out of stock, and we will tell you straight away.</li><li>Delivery, returns and exchanges follow the shipping and returns pages.</li></ul>`],
+ contact:["Contact us",`<p>Call: <a href="tel:+916204023050" style="text-decoration:underline">+91 62040 23050</a></p><p><a class="btn wa" style="max-width:280px" target="_blank" rel="noopener" href="${wa("Hi Orven Cloth, I need help")}">Chat on WhatsApp</a></p>`]
+};
+function openInfo(k){const i=INFO[k];if(i)openModal(`<h2>${i[0]}</h2>${i[1]}`,true)}
+
+/* ===== Checkout ===== */
+function openCheckout(){
+  if(!cart.length){toast("Your bag is empty");return}
+  const t=totals(), c=cust||{};
+  const items=cart.map(i=>{const p=prod(i.id);return `<div class="it"><span>${escH(p.name)}, ${i.size} × ${i.qty}</span><span>${fmt(p.price*i.qty)}</span></div>`}).join("");
+  openModal(`<h2>Checkout</h2><div class="co">
+  <form id="coForm" novalidate>
+    <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" value="${escH(c.name||"")}"><div class="err" data-for="name"></div></div>
+    <div class="two">
+      <div class="fld"><label for="f-phone">Mobile number</label><input id="f-phone" name="phone" inputmode="numeric" autocomplete="tel-national" maxlength="12" value="${escH(c.phone||"")}"><div class="err" data-for="phone"></div></div>
+      <div class="fld"><label for="f-email">Email (optional)</label><input id="f-email" name="email" type="email" autocomplete="email" value="${escH(c.email||"")}"><div class="err" data-for="email"></div></div>
+    </div>
+    <div class="fld"><label for="f-address">Address</label><textarea id="f-address" name="address" autocomplete="street-address">${escH(c.address||"")}</textarea><div class="err" data-for="address"></div></div>
+    <div class="two">
+      <div class="fld"><label for="f-city">City</label><input id="f-city" name="city" autocomplete="address-level2" value="${escH(c.city||"")}"><div class="err" data-for="city"></div></div>
+      <div class="fld"><label for="f-pin">Pincode</label><input id="f-pin" name="pin" inputmode="numeric" maxlength="6" autocomplete="postal-code" value="${escH(c.pin||"")}"><div class="err" data-for="pin"></div></div>
+    </div>
+    <div class="fld"><label for="f-state">State</label><select id="f-state" name="state" autocomplete="address-level1"><option value="">Select state</option>${STATES.map(s=>`<option${c.state===s?" selected":""}>${s}</option>`).join("")}</select><div class="err" data-for="state"></div></div>
+    <div class="fld"><label for="f-notes">Note for us (optional)</label><textarea id="f-notes" name="notes"></textarea></div>
+    <fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:500;margin-bottom:6px">Payment</legend>
+    <div class="pay">
+      <label><input type="radio" name="pay" value="cod" checked><span><b>Cash on delivery</b><br><span class="muted">Pay when your order arrives.</span></span></label>
+      <label><input type="radio" name="pay" value="online"><span><b>Pay online</b><br><span class="muted">We send you a UPI payment request on WhatsApp.</span></span></label>
+      ${UPI_ID?`<label><input type="radio" name="pay" value="upi"><span><b>Pay now with UPI</b><br><span class="muted">Opens your UPI app after you place the order.</span></span></label>`:""}
+    </div></fieldset>
+    <button class="btn" type="submit">Place order, ${fmt(t.total)}</button>
+    <p class="muted" style="margin-top:8px;font-size:12px">After placing your order, you send it to us on WhatsApp so we can confirm and ship it.</p>
+  </form>
+  <div class="sumbox"><h3 style="margin-top:0">Order summary</h3>${items}
+    <div class="row" style="margin-top:10px"><span>Subtotal</span><span>${fmt(t.sub)}</span></div>
+    ${couponOn&&t.disc?`<div class="row dis"><span>Coupon ${COUPON}</span><span>-${fmt(t.disc)}</span></div>`:""}
+    <div class="row"><span>Delivery</span><span>${t.del?fmt(t.del):"Free"}</span></div>
+    <div class="row tot" style="margin-bottom:0"><span>Total</span><span>${fmt(t.total)}</span></div></div>
+  </div>`);
+}
+function validate(f){
+  const v=Object.fromEntries(new FormData(f));const e={};
+  const phone=(v.phone||"").replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"");
+  if((v.name||"").trim().length<2)e.name="Enter your full name";
+  if(!/^[6-9]\d{9}$/.test(phone))e.phone="Enter a valid 10-digit mobile number";
+  if((v.email||"").trim()&&!/^\S+@\S+\.\S+$/.test(v.email.trim()))e.email="Enter a valid email or leave it empty";
+  if((v.address||"").trim().length<8)e.address="Enter your full address";
+  if((v.city||"").trim().length<2)e.city="Enter your city";
+  if(!v.state)e.state="Select your state";
+  if(!/^\d{6}$/.test((v.pin||"").trim()))e.pin="Enter a 6-digit pincode";
+  v.phone=phone;return {v,e};
+}
+const PAYLABEL={cod:"Cash on delivery",online:"Pay online (UPI request on WhatsApp)",upi:"Paid by UPI"};
+function newOrderId(){
+  const d=new Date(),p=n=>String(n).padStart(2,"0"),r=Math.random().toString(36).slice(2,6).toUpperCase();
+  return `OC${String(d.getFullYear()).slice(2)}${p(d.getMonth()+1)}${p(d.getDate())}-${r}`;
+}
+function orderMsg(o){
+  const lines=o.items.map(i=>`- ${i.name} (size ${i.size}) x${i.qty}: ${fmt(i.price*i.qty)}`).join("\n");
+  return `New order ${o.id}\n\nName: ${o.cust.name}\nPhone: ${o.cust.phone}\nAddress: ${o.cust.address}, ${o.cust.city}, ${o.cust.state} - ${o.cust.pin}\n\nItems:\n${lines}\n\nSubtotal: ${fmt(o.t.sub)}${o.t.disc?`\nCoupon ${COUPON}: -${fmt(o.t.disc)}`:""}\nDelivery: ${o.t.del?fmt(o.t.del):"Free"}\nTotal: ${fmt(o.t.total)}\nPayment: ${PAYLABEL[o.pay]}${o.cust.notes?`\nNote: ${o.cust.notes}`:""}`;
+}
+modal.addEventListener("submit",ev=>{
+  if(ev.target.id!=="coForm")return;ev.preventDefault();
+  const f=ev.target,{v,e}=validate(f);
+  f.querySelectorAll(".err").forEach(x=>x.textContent="");
+  f.querySelectorAll("[aria-invalid]").forEach(x=>x.removeAttribute("aria-invalid"));
+  const keys=Object.keys(e);
+  if(keys.length){
+    keys.forEach(k=>{f.querySelector(`.err[data-for="${k}"]`).textContent=e[k];const inp=f.elements[k];inp&&inp.setAttribute("aria-invalid","true")});
+    f.elements[keys[0]].focus();toast("Please fix the highlighted fields");return;
+  }
+  const t=totals();
+  const o={id:newOrderId(),at:Date.now(),items:cart.map(i=>({name:prod(i.id).name,size:i.size,qty:i.qty,price:prod(i.id).price})),t,
+    cust:{name:v.name.trim(),phone:v.phone,email:(v.email||"").trim(),address:v.address.trim(),city:v.city.trim(),state:v.state,pin:v.pin.trim(),notes:(v.notes||"").trim()},pay:v.pay,status:"Waiting for WhatsApp confirmation"};
+  orders.unshift(o);save("orven3-orders",orders);
+  cust={...o.cust};save("orven3-cust",cust);
+  cart=[];save("orven2-cart",cart);setCoupon(false);renderCart();
+  showConfirmation(o);
+});
+function showConfirmation(o){
+  const upi=o.pay==="upi"&&UPI_ID?`upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent("Orven Cloth")}&am=${o.t.total}&cu=INR&tn=${encodeURIComponent(o.id)}`:"";
+  openModal(`<div class="done"><div class="ck" aria-hidden="true">✓</div><h2 style="margin-right:0">Order placed</h2>
+    <p>Your order number is <b>${o.id}</b>.</p>
+    <p><b>Last step:</b> send your order to us on WhatsApp. We confirm it there and arrange delivery.</p>
+    <a class="btn wa" target="_blank" rel="noopener" href="${wa(orderMsg(o))}" data-sent="${o.id}">Send order on WhatsApp</a>
+    ${upi?`<a class="btn" href="${upi}">Pay ${fmt(o.t.total)} with UPI</a>`:""}
+    <button class="btn alt" data-copy-order="${o.id}">Copy order details</button>
+    <button class="btn alt" style="border-color:var(--line)" data-closem>Continue shopping</button>
+    <p class="muted" style="margin-top:10px;font-size:12px">You can find this order later under Orders.</p></div>`,true);
+}
+
+/* ===== Orders ===== */
+function openOrders(){
+  const list=orders.length?orders.map(o=>`<div class="ord">
+    <div class="oh"><span>${o.id}<span class="st">${escH(o.status)}</span></span><span>${fmt(o.t.total)}</span></div>
+    <div class="muted" style="font-size:12px">${new Date(o.at).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"})}, ${PAYLABEL[o.pay]}</div>
+    <ul>${o.items.map(i=>`<li>${escH(i.name)}, ${i.size} × ${i.qty}</li>`).join("")}</ul>
+    <div class="acts"><a target="_blank" rel="noopener" href="${wa(orderMsg(o))}" data-sent="${o.id}">Send on WhatsApp</a><a target="_blank" rel="noopener" href="${wa(`Hi Orven Cloth, I'd like an update on my order ${o.id}`)}">Ask for update</a></div></div>`).join("")
+    :`<p class="muted">You have no orders yet. Orders you place on this device appear here.</p>`;
+  openModal(`<h2>My orders</h2>${list}`,true);
+}
+document.addEventListener("click",e=>{
+  const s=e.target.closest("[data-sent]");
+  if(s){const o=orders.find(x=>x.id===s.dataset.sent);if(o&&o.status!=="Sent to Orven Cloth on WhatsApp"){o.status="Sent to Orven Cloth on WhatsApp";save("orven3-orders",orders)}}
+});
+
+/* ===== Global clicks ===== */
+document.addEventListener("click",e=>{
+  const T=e.target;
+  let x;
+  if((x=T.closest("[data-heart]"))){toggleSave(+x.dataset.heart);return}
+  if((x=T.closest("[data-add]"))){openProduct(+x.dataset.add);return}
+  if((x=T.closest("[data-open]"))){openProduct(+x.dataset.open);return}
+  if((x=T.closest("[data-info]"))){openInfo(x.dataset.info);return}
+  if((x=T.closest("[data-go]"))){go(x.dataset.go);return}
+  if((x=T.closest("[data-cat]"))){go(x.dataset.cat);return}
+  if(T.closest("[data-closem]")){closeAll();return}
+  if((x=T.closest("[data-psize]"))){pmSize=x.dataset.psize;$$("[data-psize]").forEach(b=>b.setAttribute("aria-pressed",b===x));return}
+  if(T.closest("[data-pm-add]")){pmCommit(false);return}
+  if(T.closest("[data-pm-buy]")){pmCommit(true);return}
+  if((x=T.closest("[data-copy]"))){
+    setCoupon(true);
+    try{navigator.clipboard.writeText(x.dataset.copy).then(()=>toast(`${x.dataset.copy} applied. Copied to clipboard`),()=>toast(`${x.dataset.copy} applied`))}catch(_){toast(`${x.dataset.copy} applied`)}return;
+  }
+  if((x=T.closest("[data-copy-order]"))){
+    const o=orders.find(o=>o.id===x.dataset.copyOrder);if(!o)return;
+    try{navigator.clipboard.writeText(orderMsg(o)).then(()=>toast("Order details copied"),()=>toast("Could not copy. Use the WhatsApp button"))}catch(_){toast("Could not copy. Use the WhatsApp button")}return;
+  }
+  if(!T.closest(".search"))$("#sugg").classList.remove("on");
+});
+$("#sort").onchange=e=>{sort=e.target.value;renderGrid()};
+$("#clear").onclick=()=>go(cat,false);
+
+/* ===== Search ===== */
+$("#q").addEventListener("input",e=>{
+  const v=e.target.value.trim().toLowerCase(),box=$("#sugg");
+  if(!v){box.classList.remove("on");return}
+  const r=PRODUCTS.filter(p=>(p.name+" "+p.cat).toLowerCase().includes(v)).slice(0,6);
+  box.innerHTML=r.length?r.map(p=>`<button data-sq="${escH(p.name)}"><span>${escH(p.name)}</span><b style="color:var(--sale)">${fmt(p.price)}</b></button>`).join(""):`<div class="none">No results for "${escH(v)}". Try "dress" or "hoodie".</div>`;
+  box.classList.add("on");
+});
+function runSearch(v){query=v.trim();cat="all";renderGrid();$("#sugg").classList.remove("on");if(query)$("#shop").scrollIntoView()}
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch(e.target.value)});
+$("#goSearch").onclick=()=>runSearch($("#q").value);
+$("#sugg").addEventListener("click",e=>{const b=e.target.closest("[data-sq]");if(b){$("#q").value=b.dataset.sq;runSearch(b.dataset.sq)}});
+
+/* ===== Slider ===== */
+const slides=$$(".slide");let si=0,timer;
+$("#dots").innerHTML=slides.map((_,i)=>`<button aria-label="Show offer ${i+1}" data-s="${i}" aria-current="${i===0}"></button>`).join("");
+function show(i){si=(i+slides.length)%slides.length;$("#track").style.transform=`translateX(-${si*100}%)`;$$("#dots button").forEach((b,k)=>b.setAttribute("aria-current",k===si))}
+$("#prev").onclick=()=>{show(si-1);restart()};$("#next").onclick=()=>{show(si+1);restart()};
+$("#dots").addEventListener("click",e=>{const b=e.target.closest("[data-s]");if(b){show(+b.dataset.s);restart()}});
+const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function restart(){clearInterval(timer);if(!calm)timer=setInterval(()=>show(si+1),5500)}
+$(".hero").addEventListener("mouseenter",()=>clearInterval(timer));$(".hero").addEventListener("mouseleave",restart);
+restart();
+
+/* ===== Misc ===== */
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2800)}
+$("#theme").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark"};
+function setStick(){document.documentElement.style.setProperty("--stick",$("#stick").offsetHeight+"px")}
+addEventListener("resize",setStick);
+
+renderRounds();refreshLists();renderCart();setStick();
+$("#savedN").textContent=saved.length;$("#savedN").dataset.n=saved.length;
+</script>
+</body>
+</html>
